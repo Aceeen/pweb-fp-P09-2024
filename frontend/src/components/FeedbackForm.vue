@@ -15,8 +15,6 @@
     </label>
 
     <button type="submit">Submit</button>
-    <p v-if="successMessage" class="success">{{ successMessage }}</p>
-    <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
   </form>
 </template>
 
@@ -33,17 +31,13 @@ export default {
         message: '',
         is_anonymous: false,
       },
-      successMessage: '', // Initialize successMessage
-      errorMessage: '', // Add errorMessage for better error handling
     };
   },
   methods: {
     async submitFeedback() {
-      this.successMessage = '';
-      this.errorMessage = '';
       try {
         await submitFeedback(this.feedback);
-        this.successMessage = 'Feedback submitted successfully!';
+        alert('Feedback submitted successfully!'); // Show alert on success
         // Clear the input fields
         this.feedback = {
           name: '',
@@ -52,8 +46,7 @@ export default {
           is_anonymous: false,
         };
       } catch (error) {
-        this.errorMessage =
-          error.response?.data?.error || 'Failed to submit feedback.';
+        alert('Failed to submit feedback. Please try again.'); // Show alert on error
         console.error('Feedback submission error:', error);
       }
     },
@@ -80,12 +73,5 @@ button {
 button:hover {
   background-color: #218838;
 }
-
-.success {
-  color: green;
-}
-
-.error {
-  color: red;
-}
 </style>
+
